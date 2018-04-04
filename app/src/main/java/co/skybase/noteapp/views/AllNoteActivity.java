@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,8 +32,10 @@ public class AllNoteActivity extends AppCompatActivity implements NoteAdapter.No
         setContentView(R.layout.activity_all_note);
         newNote = findViewById(R.id.new_note);
         rvNoteData = findViewById(R.id.rv_note_list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
         rvNoteData.setLayoutManager(layoutManager);
+        //rvNoteData.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         noteAdapter = new NoteAdapter(this, this);
         rvNoteData.setAdapter(noteAdapter);
 

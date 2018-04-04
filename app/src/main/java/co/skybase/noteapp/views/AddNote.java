@@ -40,6 +40,7 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener {
             public void onChanged(@Nullable NoteModel model) {
                 if (model != null) {
                     note.setText(model.getNoteData());
+                    note.setSelection(model.getNoteData().length());
                     noteID = model.getNoteId();
                 }
             }

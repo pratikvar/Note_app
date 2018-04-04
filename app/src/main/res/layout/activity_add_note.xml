@@ -6,6 +6,9 @@
     tools:context="co.skybase.noteapp.views.AddNote">
 
     <EditText
+        android:background="@drawable/note_border"
+        android:padding="6dp"
+        android:layout_margin="6dp"
         android:id="@+id/et_note"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
