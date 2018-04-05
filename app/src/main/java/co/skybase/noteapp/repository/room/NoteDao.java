@@ -23,4 +23,7 @@ public interface NoteDao {
     @Query("select * from " + NoteContract.NOTE_TABLE_NAME + " where " + NoteContract.NOTE_COLUMN_ID + "=:id")
     LiveData<NoteModel> getNote(int id);
 
+    @Query("delete from " + NoteContract.NOTE_TABLE_NAME + " where " + NoteContract.NOTE_COLUMN_ID + "=:id")
+    void deleteNote(int id);
+
 }

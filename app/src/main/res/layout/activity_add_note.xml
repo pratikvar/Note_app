@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/save"
         android:gravity="start"
-        android:inputType="textCapSentences" />
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/save"

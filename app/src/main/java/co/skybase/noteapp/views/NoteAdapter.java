@@ -54,18 +54,25 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     /*
     ViewHolder class
      */
-    class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private final TextView noteView;
 
         public NoteHolder(View itemView) {
             super(itemView);
             noteView = itemView.findViewById(R.id.tv_note);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             noteClickCallback.onNoteClick(noteModels.get(getAdapterPosition()).getNoteId());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            noteClickCallback.onNoteLongClick(noteModels.get(getAdapterPosition()).getNoteId());
+            return true;
         }
     }
 
@@ -74,5 +81,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     * */
     interface NoteClickCallback {
         void onNoteClick(int noteID);
+
+        void onNoteLongClick(int noteID);
     }
 }

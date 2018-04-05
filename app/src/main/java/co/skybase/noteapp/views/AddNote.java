@@ -4,7 +4,13 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +38,22 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener {
         save = findViewById(R.id.save);
         save.setOnClickListener(this);
 
+        registerEditTextLinks();
+        setupToolbar();
+    }
+
+    private void setupToolbar() {
+        ActionBar toolbar = getSupportActionBar();
+        if (toolbar != null) {
+            toolbar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home)
+            super.onBackPressed();
+        return true;
     }
 
     private void register(int id) {
@@ -43,6 +65,29 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener {
                     note.setSelection(model.getNoteData().length());
                     noteID = model.getNoteId();
                 }
+            }
+        });
+    }
+
+    private void registerEditTextLinks() {
+        note.setLinksClickable(true);
+        note.setAutoLinkMask(Linkify.WEB_URLS);
+        note.setMovementMethod(LinkMovementMethod.getInstance());
+        //If the edit text contains previous text with potential links
+        Linkify.addLinks(note, Linkify.WEB_URLS);
+
+        note.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Linkify.addLinks(s, Linkify.WEB_URLS);
             }
         });
     }

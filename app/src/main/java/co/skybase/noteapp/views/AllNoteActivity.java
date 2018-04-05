@@ -1,14 +1,14 @@
 package co.skybase.noteapp.views;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +26,8 @@ public class AllNoteActivity extends AppCompatActivity implements NoteAdapter.No
 
     Button newNote;
 
+    NoteViewModel noteViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,7 @@ public class AllNoteActivity extends AppCompatActivity implements NoteAdapter.No
         newNote = findViewById(R.id.new_note);
         rvNoteData = findViewById(R.id.rv_note_list);
         //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         rvNoteData.setLayoutManager(layoutManager);
         //rvNoteData.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         noteAdapter = new NoteAdapter(this, this);
@@ -44,7 +46,7 @@ public class AllNoteActivity extends AppCompatActivity implements NoteAdapter.No
     }
 
     private void register() {
-        NoteViewModel noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
+        noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
 
         noteViewModel.getNoteList().observe(this, new Observer<List<NoteModel>>() {
             @Override
@@ -68,5 +70,21 @@ public class AllNoteActivity extends AppCompatActivity implements NoteAdapter.No
         Intent intent = new Intent(this, AddNote.class);
         intent.putExtra("id", noteID);
         startActivity(intent);
+    }
+
+    @Override
+    public void onNoteLongClick(final int noteID) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //builder.setTitle(R.string.confirm_delete);
+        builder.setMessage(R.string.delete_note);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                noteViewModel.deleteNote(noteID);
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
     }
 }

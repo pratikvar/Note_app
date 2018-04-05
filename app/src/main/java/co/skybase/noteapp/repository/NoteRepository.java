@@ -15,7 +15,7 @@ import co.skybase.noteapp.repository.room.NoteModel;
  */
 
 public class NoteRepository {
-    LiveData<List<NoteModel>> wordData;
+    private LiveData<List<NoteModel>> wordData;
     private NoteDao noteDao;
 
     public NoteRepository(Application application) {
@@ -39,6 +39,9 @@ public class NoteRepository {
         new InsertNote(noteDao).execute(model);
     }
 
+    public void deleteNote(int id) {
+        new DeleteNote(noteDao).execute(id);
+    }
 
     private static class InsertNote extends AsyncTask<NoteModel, Void, Void> {
         NoteDao noteDao;
@@ -50,6 +53,21 @@ public class NoteRepository {
         @Override
         protected Void doInBackground(NoteModel... noteModels) {
             noteDao.insertNote(noteModels[0]);
+            return null;
+        }
+    }
+
+
+    private static class DeleteNote extends AsyncTask<Integer, Void, Void> {
+        NoteDao noteDao;
+
+        DeleteNote(NoteDao noteDao) {
+            this.noteDao = noteDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... ids) {
+            noteDao.deleteNote(ids[0]);
             return null;
         }
     }

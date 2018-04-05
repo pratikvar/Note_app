@@ -1,5 +1,6 @@
 package co.skybase.noteapp.viewmodel;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
@@ -14,7 +15,7 @@ import co.skybase.noteapp.repository.room.NoteModel;
  */
 
 public class NoteViewModel extends AndroidViewModel {
-    LiveData<List<NoteModel>> noteList;
+    private LiveData<List<NoteModel>> noteList;
 
     private NoteRepository noteRepository;
 
@@ -28,7 +29,7 @@ public class NoteViewModel extends AndroidViewModel {
         return noteList;
     }
 
-    public void insert(NoteModel note) {
-        noteRepository.insertNote(note);
+    public void deleteNote(Integer id) {
+        noteRepository.deleteNote(id);
     }
 }

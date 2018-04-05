@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Note App</string>
+    <string name="app_name">Notes</string>
     <string name="save">Save</string>
     <string name="new_note">New Note</string>
+    <string name="confirm_delete">Confirm Action</string>
+    <string name="delete_note">Delete Note?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>
